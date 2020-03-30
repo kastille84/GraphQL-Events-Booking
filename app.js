@@ -13,6 +13,17 @@ const app = express();
 
 app.use(bodyParser.json());
 
+//for CORS
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin","*")
+  res.setHeader("Access-Control-Allow-Methods","POST,GET,OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  if(req.method === 'OPTIONS') {
+    return res.sendStatus(200);
+  }
+  next();
+})
+
 //middleware to check is user is authenticated
 //we wont lock /graphql down, but instead let
 //graphql know, (req.isAuth = false) if is Authenticated
